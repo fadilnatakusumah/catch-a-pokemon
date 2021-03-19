@@ -11,7 +11,7 @@ function App() {
       <Router>
         <Route exact path="/" component={Pokemons} />
         <Route exact path="/my-pokemons" component={MyPokemons} />
-        <Route exact path="/pokemon/:id" component={DetailPokemon} />
+        <Route exact path="/pokemon/:name" component={DetailPokemon} />
       </Router>
     </PokeProvider>
   );
