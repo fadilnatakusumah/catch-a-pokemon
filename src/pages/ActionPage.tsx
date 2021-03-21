@@ -1,15 +1,14 @@
 import styled from "@emotion/styled";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RouteComponentProps } from "react-router";
-import { Link } from "react-router-dom";
 import { FaChevronCircleLeft, FaPencilAlt } from "react-icons/fa";
 
 import { Wrapper } from "../components/Wrapper";
 import { useDataHook } from "../utils/hooks";
 
-import pokeBallImage from "../assets/pokeball.png";
-import footprintsImage from "../assets/footprints.png";
-import gotchaImage from "../assets/gotcha.png";
+import pokeBallImage from "../assets/pokeball.webp";
+import footprintsImage from "../assets/footprints.webp";
+import gotchaImage from "../assets/gotcha.webp";
 
 
 const ActionPageStyled = styled.div<{ bgColor?: string }>`
@@ -60,12 +59,12 @@ export const ActionPage = (props: RouteComponentProps) => {
       setIsLoaded(true);
       setTimeout(() => {
         let isSuccessful = false;
-        if (true) {
-          // if (Math.random() >= 0.5) {
+        if (Math.random() >= 0.5) {
           isSuccessful = true;
           if (isAlreadyExist(state.pokemon)) {
             const newPokemon = { ...state.pokemon, name: `${state.pokemon.name} ${ownedLength(state.pokemon)}` }
             savePokemon(newPokemon);
+            console.log("FIRST🚀 ~ file: ActionPage.tsx ~ line 68 ~ setTimeout ~ newPokemon", newPokemon)
             setMessage({ subtitle: "But already have one, so you need to give it a different name", title: "Success!" });
             setShowInput(true);
           } else {
@@ -88,7 +87,6 @@ export const ActionPage = (props: RouteComponentProps) => {
       setIsLoaded(true);
       setMessage({ subtitle: "Goodbye friend..", title: "Released" });
       releasePokemon(state.pokemon);
-      console.log("🚀 ~ file: ActionPage.tsx ~ line 93 ~ useEffect ~ state.pokemon", state.pokemon)
       props.history.replace(
         '/my-action',
         {
@@ -109,8 +107,10 @@ export const ActionPage = (props: RouteComponentProps) => {
     if (state.pokemon.name?.toLowerCase() === pokemonName.toLowerCase()) return;
     if (isAlreadyExist({ ...state.pokemon, name: pokemonName })) return;
 
-    const oldPokemon = { ...state.pokemon, name: `${state.pokemon.name} ${ownedLength(state.pokemon)}` }
+    const oldPokemon = { ...state.pokemon, name: `${state.pokemon.name} ${ownedLength(state.pokemon) - 1}` }
+    console.log("🚀 ~ file: ActionPage.tsx ~ line 112 ~ onDoneEditName ~ oldPokemon", oldPokemon)
     const newPokemon = { ...state.pokemon, name: pokemonName };
+    console.log("🚀 ~ file: ActionPage.tsx ~ line 114 ~ onDoneEditName ~ newPokemon", newPokemon)
     updatePokemon(oldPokemon, newPokemon);
     props.history.replace(
       '/my-action',
@@ -262,3 +262,6 @@ export const InputPreview = ({
     </InputPreviewStyled>
   )
 }
+
+
+export default ActionPage;

@@ -11,7 +11,7 @@ import { useDataHook } from "../utils/hooks";
 import { CgPokemon } from "react-icons/cg";
 import { useHistory } from "react-router";
 
-const PokemonsPage = styled.div`
+const MyPokemonsPageStyled = styled.div`
   background-color: #F6F8FA;
   min-height: 100vh;
 
@@ -62,7 +62,7 @@ export const MyPokemonsPage = () => {
   }
 
   return (
-    <PokemonsPage>
+    <MyPokemonsPageStyled>
       <Wrapper title="Home">
         <div className="list-pokemons">
           {
@@ -84,7 +84,9 @@ export const MyPokemonsPage = () => {
           }
         </div>
       </Wrapper>
-    </PokemonsPage>
+    </MyPokemonsPageStyled>
   )
 }
 
+
+export default MyPokemonsPage;

@@ -2,7 +2,6 @@ import { Link, useHistory } from "react-router-dom";
 import { CgPokemon, CgShoppingBag } from "react-icons/cg"
 
 import { PokemonTypes } from "../@types/context";
-import { useDataHook } from "../utils/hooks";
 import styled from "@emotion/styled";
 
 interface NavigationButtonsPropTypes {

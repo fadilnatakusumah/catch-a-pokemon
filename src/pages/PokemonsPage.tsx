@@ -64,7 +64,6 @@ export const PokemonsPage = () => {
     }
   });
 
-  console.log("🚀 ~ file: PokemonsPage.tsx ~ line 58 ~ PokemonsPage ~ error", error)
   const goToDetail = (pokemon: PokemonTypes) => {
     history.push(`pokemon/${pokemon.name}`, { pokemon, isNew: true })
   }
@@ -124,7 +123,8 @@ export const PokemonsPage = () => {
           }
         </div>
       </Wrapper >
-    </PokemonsPageStyled >
+    </PokemonsPageStyled>
   )
 }
 
+export default PokemonsPage;

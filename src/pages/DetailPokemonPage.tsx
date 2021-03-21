@@ -13,7 +13,7 @@ import { PokeBall, PokeBallImage } from "../components/PokeBall";
 import { useModal } from "../components/Modal";
 import { InputPreview } from "./ActionPage";
 
-const DetailPokemonPage = styled.div<{ bgColor: string }>`
+const DetailPokemonPageStyled = styled.div<{ bgColor: string }>`
   background-color: ${(props: any) => props.bgColor || "#F6F8FA"};
   min-height: 100vh;
   transition: .5s;
@@ -121,7 +121,7 @@ const DetailPokemonPage = styled.div<{ bgColor: string }>`
   }
 `
 
-export const DetailPokemon = (props: RouteComponentProps | any) => {
+export const DetailPokemonPage = (props: RouteComponentProps | any) => {
   const client = useApolloClient();
   const { name } = props.match.params as any;
   const { state } = props.location;
@@ -195,7 +195,7 @@ export const DetailPokemon = (props: RouteComponentProps | any) => {
   }
 
   return (
-    <DetailPokemonPage bgColor={colors[0]}>
+    <DetailPokemonPageStyled bgColor={colors[0]}>
       <Wrapper title={pokemon.name}>
         <div className="card">
           {/* <WrapperModal>
@@ -279,7 +279,8 @@ export const DetailPokemon = (props: RouteComponentProps | any) => {
             />}
         </div>
       </Wrapper>
-    </DetailPokemonPage>
+    </DetailPokemonPageStyled>
   );
 }
 
+export default DetailPokemonPage;

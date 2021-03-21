@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Fragment, ReactNode } from "react";
 import { Helmet } from "react-helmet";
+
 import { NavigationButtons } from "./NavigationButtons";
 
 interface WrapperPropsTypes {

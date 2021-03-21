@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { MouseEventHandler } from 'react';
 
-import pokeBallImage from "../assets/pokeball.png";
+import pokeBallImage from "../assets/pokeball.webp";
 
 const PokeBallStyled = styled.div`
   position: fixed;

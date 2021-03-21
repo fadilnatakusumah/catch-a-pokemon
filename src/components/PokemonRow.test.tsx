@@ -1,7 +1,6 @@
 import { PokemonRow } from './PokemonRow';
 import { render } from '@testing-library/react';
 
-
 describe('Pokemon row', () => {
   it('renders correctly', async () => {
     const dummyProps = {
