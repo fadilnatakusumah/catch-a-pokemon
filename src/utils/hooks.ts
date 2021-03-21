@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import createPersistedState from 'use-persisted-state';
 import { InitialStateTypes, PokemonTypes } from '../@types/context';
 
