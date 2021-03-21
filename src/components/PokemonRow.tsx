@@ -1,10 +1,12 @@
 import styled from '@emotion/styled'
-import { useEffect, useState } from 'react'
-import { useHistory } from 'react-router'
-import { PokemonTypes } from '../contexts/ApolloContext'
+import { MouseEventHandler, useEffect, useRef, useState } from 'react'
 import { ColorExtractor } from 'react-color-extractor'
+import { PokemonTypes } from '../@types/context'
+import { useDataHook } from '../utils/hooks'
 interface PokemonRowProps {
-  pokemon: PokemonTypes
+  pokemon: PokemonTypes,
+  onClick?: MouseEventHandler,
+  hideCount?: boolean,
 }
 
 const PokemonRowStyled = styled.div`
@@ -51,20 +53,28 @@ const PokemonRowStyled = styled.div`
   }
 `
 
-export const PokemonRow = ({ pokemon }: PokemonRowProps) => {
-  const router = useHistory();
+export const PokemonRow = ({ pokemon, hideCount = false, onClick = () => { } }: PokemonRowProps) => {
+  const { ownedLength } = useDataHook();
   const [colors, setColors] = useState([]);
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true
+    return () => {
+      isMounted.current = false
+    }
+  }, [])
 
   return (
     <PokemonRowStyled
       data-testid="pokemon-row"
-      onClick={() => router.push(`/pokemon/${pokemon.name}`)}
+      onClick={onClick}
     >
       <div>
         <h1 style={{ color: colors[1] }}>{pokemon.name}</h1>
-        <h6>Owned: 0</h6>
+        {!hideCount && <h6>Owned: {ownedLength(pokemon)}</h6>}
       </div>
-      <ColorExtractor getColors={(colors: any) => setColors(colors)}>
+      <ColorExtractor getColors={(colors: any) => isMounted.current ? setColors(colors) : null}>
         <img src={pokemon.image} />
       </ColorExtractor>
     </PokemonRowStyled>

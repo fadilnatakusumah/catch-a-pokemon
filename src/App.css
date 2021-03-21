@@ -13,8 +13,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+::-webkit-scrollbar {
+  width     : 0px;
+  background: transparent;
+  display: none;
+  /* make scrollbar transparent */
+}
 
-#root{
+#root {
   flex: 1;
 }
 

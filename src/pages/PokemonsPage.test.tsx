@@ -1,8 +1,8 @@
 import { MockedProvider } from '@apollo/client/testing';
-import { Pokemons } from './Pokemons';
+import { PokemonsPage } from './PokemonsPage';
 import { QUERY_GET_LIST_POKEMONS } from '../graphql/queries';
-import { act, getByText, render, screen, wait, waitFor } from '@testing-library/react';
-import { createMockClient } from "mock-apollo-client";
+import { render } from '@testing-library/react';
+
 const mocks = [
   {
     request: {
@@ -31,7 +31,7 @@ describe('Pokemons page', () => {
   it('renders without error', async () => {
     const { container } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <Pokemons />
+        <PokemonsPage />
       </MockedProvider>
     )
 

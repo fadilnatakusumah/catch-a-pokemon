@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
-import { ReactNode } from "react";
+import { Fragment, ReactNode } from "react";
 import { Helmet } from "react-helmet";
+import { NavigationButtons } from "./NavigationButtons";
 
 interface WrapperPropsTypes {
   children: ReactNode,
@@ -14,6 +15,7 @@ const WrapperStyled = styled.div`
   width: 100%;
   overflow-x: hidden;
   padding-bottom: 20px;
+  padding-top: 50px;
 `
 
 export const Wrapper = ({ title = "Pokemon Tokped", children }: WrapperPropsTypes) => {
@@ -22,7 +24,10 @@ export const Wrapper = ({ title = "Pokemon Tokped", children }: WrapperPropsType
       <Helmet>
         <title>Pokemon Tokped - {title && title[0].toUpperCase() + title.substring(1)}</title>
       </Helmet>
-      {children}
+      <NavigationButtons />
+      <Fragment>
+        {children}
+      </Fragment>
     </WrapperStyled>
   )
 }

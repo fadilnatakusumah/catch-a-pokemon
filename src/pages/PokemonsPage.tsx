@@ -1,15 +1,15 @@
 import { useQuery } from "@apollo/client"
 import styled from "@emotion/styled";
-import Helmet from "react-helmet";
 
 import { QUERY_GET_LIST_POKEMONS } from "../graphql/queries"
 
 import { Wrapper } from "../components/Wrapper";
-import { PokemonTypes } from "../contexts/ApolloContext";
 import PokemonRow from "../components/PokemonRow";
 import { Fragment, useEffect, useState } from "react";
+import { ListResponseTypes, PokemonTypes } from "../@types/context";
+import { useHistory } from "react-router";
 
-const PokemonsPage = styled.div`
+const PokemonsPageStyled = styled.div`
   background-color: #F6F8FA;
   min-height: 100vh;
 
@@ -34,7 +34,9 @@ const PokemonsPage = styled.div`
   .loading-more{
     text-align:center;
     user-select: none;
+
     >button {
+      cursor: pointer;
       user-select: none;
       border: none;
       padding: 5px 10px;
@@ -45,31 +47,28 @@ const PokemonsPage = styled.div`
       &:hover{
         transform: scale(1.1);
       }
-
     }
   }
 `
 
-export interface ListResponseTypes {
-  pokemons: {
-    next: string,
-    nextOffset: number,
-    params: {
-      limit: number,
-      offset: number,
-    }
-    results: PokemonTypes[]
-  }
-}
-
-export const Pokemons = () => {
+export const PokemonsPage = () => {
   const [isLoadMore, setIsLoadMore] = useState(false);
+  const history = useHistory();
+  console.log("🚀 ~ file: PokemonsPage.tsx ~ line 57 ~ PokemonsPage ~ history", history)
   const { data, loading, fetchMore } = useQuery<ListResponseTypes>(QUERY_GET_LIST_POKEMONS, {
     variables: {
       limit: 10,
       offset: 0,
     },
   });
+
+  const goToDetail = (pokemon: PokemonTypes) => {
+    history.push(`pokemon/${pokemon.name}`, { pokemon, isNew: true })
+  }
+
+  useEffect(() => {
+    history.replace("/", null);
+  }, [])
 
   function onLoadMoreHandler() {
     setIsLoadMore(true);
@@ -93,7 +92,7 @@ export const Pokemons = () => {
   }
 
   return (
-    <PokemonsPage>
+    <PokemonsPageStyled>
       <Wrapper title="Home">
         <div className="title">Choose your Pokemon</div>
         <div className="list-pokemons">
@@ -103,7 +102,9 @@ export const Pokemons = () => {
             (
               <Fragment>
                 <Fragment>
-                  {data?.pokemons.results.map((data) => <PokemonRow pokemon={data} key={data.id} />)}
+                  {data?.pokemons.results.map((data) => (
+                    <PokemonRow onClick={() => goToDetail(data)} pokemon={data} key={data.id} />
+                  ))}
                 </Fragment>
                 <Fragment>
                   {data?.pokemons.nextOffset && (
@@ -116,7 +117,7 @@ export const Pokemons = () => {
             )}
         </div>
       </Wrapper>
-    </PokemonsPage>
+    </PokemonsPageStyled>
   )
 }
 

@@ -1,19 +1,18 @@
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { DetailPokemon } from "./pages/DetailPokemon";
-import { MyPokemons } from "./pages/MyPokemons";
-import { Pokemons } from "./pages/Pokemons";
-import { PokeProvider } from "./contexts/ApolloContext"
+import { DetailPokemon } from "./pages/DetailPokemonPage";
+import { MyPokemonsPage } from "./pages/MyPokemonsPage";
+import { PokemonsPage } from "./pages/PokemonsPage";
+import { ActionPage} from "./pages/ActionPage";
 import "./App.css"
 
 function App() {
   return (
-    <PokeProvider>
-      <Router>
-        <Route exact path="/" component={Pokemons} />
-        <Route exact path="/my-pokemons" component={MyPokemons} />
-        <Route exact path="/pokemon/:name" component={DetailPokemon} />
-      </Router>
-    </PokeProvider>
+    <Router>
+      <Route exact path="/" component={PokemonsPage} />
+      <Route exact path="/my-pokemons" component={MyPokemonsPage} />
+      <Route exact path="/pokemon/:name" component={DetailPokemon} />
+      <Route exact path="/my-action" component={ActionPage} />
+    </Router>
   );
 }
 
