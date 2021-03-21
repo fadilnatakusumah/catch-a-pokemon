@@ -25,7 +25,7 @@ const PokemonsPageStyled = styled.div`
     padding: 0 20px;
   }
 
-  .loading-text{
+  .loading-text,.error-text{
     font-size: 1.5em;
     text-align: center;
     color: #333;
@@ -54,14 +54,17 @@ const PokemonsPageStyled = styled.div`
 export const PokemonsPage = () => {
   const [isLoadMore, setIsLoadMore] = useState(false);
   const history = useHistory();
-  console.log("🚀 ~ file: PokemonsPage.tsx ~ line 57 ~ PokemonsPage ~ history", history)
-  const { data, loading, fetchMore } = useQuery<ListResponseTypes>(QUERY_GET_LIST_POKEMONS, {
+  const { data, loading, fetchMore, error } = useQuery<ListResponseTypes>(QUERY_GET_LIST_POKEMONS, {
     variables: {
       limit: 10,
       offset: 0,
     },
+    onCompleted() {
+      // throw new Error();
+    }
   });
 
+  console.log("🚀 ~ file: PokemonsPage.tsx ~ line 58 ~ PokemonsPage ~ error", error)
   const goToDetail = (pokemon: PokemonTypes) => {
     history.push(`pokemon/${pokemon.name}`, { pokemon, isNew: true })
   }
@@ -96,28 +99,32 @@ export const PokemonsPage = () => {
       <Wrapper title="Home">
         <div className="title">Choose your Pokemon</div>
         <div className="list-pokemons">
-          {loading ? (
-            <div className="loading-text">Loading...</div>
-          ) :
-            (
-              <Fragment>
-                <Fragment>
-                  {data?.pokemons.results.map((data) => (
-                    <PokemonRow onClick={() => goToDetail(data)} pokemon={data} key={data.id} />
-                  ))}
-                </Fragment>
-                <Fragment>
-                  {data?.pokemons.nextOffset && (
-                    <div className="loading-more">
-                      <button disabled={isLoadMore} onClick={onLoadMoreHandler}>{isLoadMore ? "Loading more.." : "Load more"}</button>
-                    </div>
-                  )}
-                </Fragment>
-              </Fragment>
-            )}
+          {
+            error ?
+              <div className="error-text">There's error while fetching the data</div>
+              : (loading || !data)
+                ?
+                <div className="loading-text">Loading...</div>
+                : (
+                  <Fragment>
+                    <Fragment>
+                      {data?.pokemons.results.map((data) => (
+                        <PokemonRow onClick={() => goToDetail(data)} pokemon={data} key={data.id} />
+                      ))}
+                    </Fragment>
+                    <Fragment>
+                      {data?.pokemons.nextOffset && (
+                        <div className="loading-more">
+                          <button disabled={isLoadMore} onClick={onLoadMoreHandler}>{isLoadMore ? "Loading more.." : "Load more"}</button>
+                        </div>
+                      )}
+                    </Fragment>
+                  </Fragment>
+                )
+          }
         </div>
-      </Wrapper>
-    </PokemonsPageStyled>
+      </Wrapper >
+    </PokemonsPageStyled >
   )
 }
 

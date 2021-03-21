@@ -1,7 +1,10 @@
 import { MockedProvider } from '@apollo/client/testing';
 import { PokemonsPage } from './PokemonsPage';
 import { QUERY_GET_LIST_POKEMONS } from '../graphql/queries';
-import { render } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
+import { Router, useHistory } from 'react-router';
+import { createMemoryHistory } from 'history';
+import { GraphQLError } from 'graphql';
 
 const mocks = [
   {
@@ -29,11 +32,15 @@ const mocks = [
 
 describe('Pokemons page', () => {
   it('renders without error', async () => {
-    const { container } = render(
+    const history = createMemoryHistory()
+    const { container, findByText, debug } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <PokemonsPage />
+        <Router history={history}>
+          <PokemonsPage />
+        </Router>
       </MockedProvider>
     )
+    debug();
 
     expect(container.getElementsByClassName('title').length).toBe(1);
     expect(container.getElementsByClassName('loading-text').length).toBe(1);

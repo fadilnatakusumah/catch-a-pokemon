@@ -28,6 +28,8 @@ const mocks = [
 ];
 
 describe('Pokemon detail page', () => {
+  const history = createMemoryHistory()
+
   it('renders component to the route', async () => {
     // const history = createMemoryHistory();
     // history.push('/pokemon/buck');
@@ -36,22 +38,29 @@ describe('Pokemon detail page', () => {
       match: {
         params: {}
       },
-      location: {}
+      location: {
+        state: {
+          pokemon: {
+            "id": 1,
+            "name": "buck",
+            "message": ""
+          },
+        }
+      }
     }
-    const { container, getByTestId } = render(
+
+    const { container, findByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <DetailPokemon
-          {...routersProps}
-        />
+        <Router history={history}>
+          <DetailPokemon
+            {...routersProps}
+          />
+        </Router>
       </MockedProvider>
-    )
-    // debug();
+    );
 
-    expect(container.getElementsByClassName('loading-text').length).toBe(1);
-
-    // await act(() => new Promise((res) => setTimeout(res, 2000)))
-  
-    // expect(container.getElementsByClassName('title').length).toBe(1);
+    const comp = await findByText("buck")
+    expect(comp).toBeInTheDocument();
   });
 })
 

@@ -125,7 +125,7 @@ export const DetailPokemon = (props: RouteComponentProps | any) => {
   const client = useApolloClient();
   const { name } = props.match.params as any;
   const { state } = props.location;
-  const { WrapperModal, onToggleModal } = useModal();
+  // const { WrapperModal, onToggleModal } = useModal();
   const [isLoading, setLoading] = useState(false);
   const { isAlreadyExist, updatePokemon } = useDataHook();
   const [pokemonName, setPokemonName] = useState("")
@@ -204,7 +204,6 @@ export const DetailPokemon = (props: RouteComponentProps | any) => {
               <input placeholder="Select New Name" />
             </div>
           </WrapperModal> */}
-
 
           {(isLoading || !pokemon.name)
             ? (

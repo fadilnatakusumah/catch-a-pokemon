@@ -58,6 +58,8 @@
     "@types/react-helmet": "^6.1.0",
     "@types/react-router-dom": "^5.1.7",
     "@types/use-persisted-state": "^0.3.0",
-    "history": "^5.0.0"
+    "history": "^5.0.0",
+    "react-hooks-testing-library": "^0.6.0",
+    "react-test-renderer": "^17.0.1"
   }
 }
