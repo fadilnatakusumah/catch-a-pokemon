@@ -64,7 +64,7 @@ interface PokeBallPropTypes {
 export const PokeBall = ({ isCatching = true, onClick = (evt) => { } }: PokeBallPropTypes) => {
   return (
     <PokeBallStyled>
-      <div onClick={onClick}>
+      <div onClick={onClick} data-testid="pokeball">
         <img
           src={pokeBallImage}
           alt="pokeball"

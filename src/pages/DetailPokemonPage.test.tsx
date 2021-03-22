@@ -1,11 +1,11 @@
 import { MockedProvider } from '@apollo/client/testing';
-import { QUERY_GET_POKEMON } from '../graphql/queries';
 import { render } from '@testing-library/react';
-import { DetailPokemon } from './DetailPokemonPage';
 import { MemoryRouter } from 'react-router';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
-import { act } from 'react-dom/test-utils';
+
+import { QUERY_GET_POKEMON } from '../graphql/queries';
+import { DetailPokemonPage } from './DetailPokemonPage';
 
 const mocks = [
   {
@@ -29,30 +29,27 @@ const mocks = [
 
 describe('Pokemon detail page', () => {
   const history = createMemoryHistory()
-
-  it('renders component to the route', async () => {
-    // const history = createMemoryHistory();
-    // history.push('/pokemon/buck');
-    const routersProps = {
-      history: {},
-      match: {
-        params: {}
-      },
-      location: {
-        state: {
-          pokemon: {
-            "id": 1,
-            "name": "buck",
-            "message": ""
-          },
-        }
+  const routersProps = {
+    history: {},
+    match: {
+      params: {}
+    },
+    location: {
+      state: {
+        isNew: false,
+        pokemon: {
+          "id": 1,
+          "name": "buck",
+          "message": ""
+        },
       }
     }
-
+  }
+  it('renders component to the route', async () => {
     const { container, findByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <Router history={history}>
-          <DetailPokemon
+          <DetailPokemonPage
             {...routersProps}
           />
         </Router>
@@ -62,6 +59,21 @@ describe('Pokemon detail page', () => {
     const comp = await findByText("buck")
     expect(comp).toBeInTheDocument();
   });
+
+  it("renders the pokeball correctly", async () => {
+    const { findByTestId } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Router history={history}>
+          <DetailPokemonPage
+            {...routersProps}
+          />
+        </Router>
+      </MockedProvider>
+    );
+
+    const pokeball = await findByTestId("pokeball");
+    expect(pokeball).toBeInTheDocument();
+  })
 })
 
 

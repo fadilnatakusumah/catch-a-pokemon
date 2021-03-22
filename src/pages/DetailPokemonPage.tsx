@@ -259,13 +259,6 @@ export const DetailPokemonPage = (props: RouteComponentProps | any) => {
                           </li>
                         ))}
                       </Fragment>
-                      <Fragment>
-                        {pokemon.moves?.map(({ move }, idx) => (
-                          <li key={idx}>
-                            {move.name}
-                          </li>
-                        ))}
-                      </Fragment>
                     </ul>
                   </div>
                 </div>
