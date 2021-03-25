@@ -51,7 +51,6 @@ export const ActionPage = (props: RouteComponentProps) => {
   });
   const { ownedLength, savePokemon, isAlreadyExist, updatePokemon, releasePokemon } = useDataHook();
   const { state } = props.location;
-  console.log("🚀 ~ file: ActionPage.tsx ~ line 55 ~ ActionPage ~ props", props)
 
   useEffect(() => {
     if (state?.isCatching) {
@@ -64,7 +63,6 @@ export const ActionPage = (props: RouteComponentProps) => {
           if (isAlreadyExist(state.pokemon)) {
             const newPokemon = { ...state.pokemon, name: `${state.pokemon.name} ${ownedLength(state.pokemon)}` }
             savePokemon(newPokemon);
-            console.log("FIRST🚀 ~ file: ActionPage.tsx ~ line 68 ~ setTimeout ~ newPokemon", newPokemon)
             setMessage({ subtitle: "But already have one, so you need to give it a different name", title: "Success!" });
             setShowInput(true);
           } else {
@@ -104,13 +102,12 @@ export const ActionPage = (props: RouteComponentProps) => {
   }
 
   const onDoneEditName = () => {
+    if (pokemonName === "") return;
     if (state.pokemon.name?.toLowerCase() === pokemonName.toLowerCase()) return;
     if (isAlreadyExist({ ...state.pokemon, name: pokemonName })) return;
 
     const oldPokemon = { ...state.pokemon, name: `${state.pokemon.name} ${ownedLength(state.pokemon) - 1}` }
-    console.log("🚀 ~ file: ActionPage.tsx ~ line 112 ~ onDoneEditName ~ oldPokemon", oldPokemon)
     const newPokemon = { ...state.pokemon, name: pokemonName };
-    console.log("🚀 ~ file: ActionPage.tsx ~ line 114 ~ onDoneEditName ~ newPokemon", newPokemon)
     updatePokemon(oldPokemon, newPokemon);
     props.history.replace(
       '/my-action',

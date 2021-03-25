@@ -182,6 +182,7 @@ export const DetailPokemonPage = (props: RouteComponentProps | any) => {
   }
 
   const onToggleInput = () => {
+    if (pokemonName === "") return;
     if (pokemon.name?.toLowerCase() === pokemonName.toLowerCase()) return;
     if (isAlreadyExist({ ...pokemon, name: pokemonName })) return;
 
