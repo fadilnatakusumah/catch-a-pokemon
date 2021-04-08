@@ -19,11 +19,11 @@ const WrapperStyled = styled.div`
   padding-top: 50px;
 `
 
-export const Wrapper = ({ title = "Pokemon Tokped", children }: WrapperPropsTypes) => {
+export const Wrapper = ({ title = "Catch a Pokemon", children }: WrapperPropsTypes) => {
   return (
     <WrapperStyled>
       <Helmet>
-        <title>Pokemon Tokped - {title && title[0].toUpperCase() + title.substring(1)}</title>
+        <title>Catch a Pokemon - {title && title[0].toUpperCase() + title.substring(1)}</title>
       </Helmet>
       <NavigationButtons />
       <Fragment>
